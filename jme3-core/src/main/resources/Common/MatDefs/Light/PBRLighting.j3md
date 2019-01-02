@@ -38,6 +38,9 @@ MaterialDef PBR Lighting {
         // templates in editing software). Use this flag if everything looks to glossy/wet
         Boolean UseMetallicFirstPacking
         
+        // GLTF Exporter Bug
+        Boolean UseBrokenGLTFExporter
+        
         // Texture of the emissive parts of the material
         Texture2D EmissiveMap
 
@@ -158,6 +161,7 @@ MaterialDef PBR Lighting {
             INSTANCING : UseInstancing
             USE_PACKED_MR: MetallicRoughnessMap
             USE_METALLIC_FIRST: UseMetallicFirstPacking
+            BROKEN_GLTF_EXPORTER: UseBrokenGLTFExporter
             USE_PACKED_SG: SpecularGlossinessMap
             SPECULARMAP : SpecularMap
             GLOSSINESSMAP : GlossinessMap

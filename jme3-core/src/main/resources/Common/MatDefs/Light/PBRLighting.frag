@@ -134,10 +134,14 @@ void main(){
     #endif
 
     #ifdef USE_PACKED_MR
-        #ifdef USE_METALLIC_FIRST
-            vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).bg;
+        #ifdef BROKEN_GLTF_EXPORTER
+            vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).rb;
         #else
-            vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).gb;
+            #ifdef USE_METALLIC_FIRST
+                vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).bg;
+            #else
+                vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).gb;
+            #endif
         #endif
         
         float Roughness = rm.x * max(m_Roughness, 1e-4);
