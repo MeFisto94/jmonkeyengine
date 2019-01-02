@@ -134,7 +134,12 @@ void main(){
     #endif
 
     #ifdef USE_PACKED_MR
-        vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).gb;
+        #ifdef USE_METALLIC_FIRST
+            vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).bg;
+        #else
+            vec2 rm = texture2D(m_MetallicRoughnessMap, newTexCoord).gb;
+        #endif
+        
         float Roughness = rm.x * max(m_Roughness, 1e-4);
         float Metallic = rm.y * max(m_Metallic, 0.0);
     #else

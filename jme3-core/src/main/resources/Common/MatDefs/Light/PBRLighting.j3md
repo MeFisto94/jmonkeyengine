@@ -33,6 +33,11 @@ MaterialDef PBR Lighting {
         // b: Metallic
         Texture2D MetallicRoughnessMap -LINEAR
         
+        // GLTF and thus jME use "G = Roughness, B = Metallic", but everyone else swaps these
+        // channels, leading to problems with the interopability (e.g. when using default
+        // templates in editing software). Use this flag if everything looks to glossy/wet
+        Boolean UseMetallicFirstPacking
+        
         // Texture of the emissive parts of the material
         Texture2D EmissiveMap
 
@@ -152,6 +157,7 @@ MaterialDef PBR Lighting {
             NUM_BONES : NumberOfBones                        
             INSTANCING : UseInstancing
             USE_PACKED_MR: MetallicRoughnessMap
+            USE_METALLIC_FIRST: UseMetallicFirstPacking
             USE_PACKED_SG: SpecularGlossinessMap
             SPECULARMAP : SpecularMap
             GLOSSINESSMAP : GlossinessMap
