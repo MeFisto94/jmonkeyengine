@@ -208,6 +208,7 @@ if (skipPrebuildLibraries != "true" && buildNativeProjects != "true") {
         }
 
         assemble.dependsOn extractPrebuiltNatives
+        run.dependsOn extractPrebuiltNatives // since run does NOT depend on assemble.
     }
 }
 
