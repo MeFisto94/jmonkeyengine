@@ -2,6 +2,11 @@ if (!hasProperty('mainClass')) {
     ext.mainClass = ''
 }
 
+dependencies {
+    compile 'com.google.code.gson:gson:2.8.6'
+}
+
+
 sourceSets {
     main {
         java {
