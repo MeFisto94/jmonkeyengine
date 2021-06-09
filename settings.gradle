@@ -18,6 +18,10 @@ if (JavaVersion.current().isJava8Compatible()) {
     include 'jme3-vr'
 }
 
+if (JavaVersion.current().isJava11Compatible()) {
+    include 'jme3-pipelines'
+}
+
 // Other external dependencies
 include 'jme3-jbullet'
 include 'jme3-niftygui'

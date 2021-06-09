@@ -1,0 +1,13 @@
+if (!hasProperty('mainClass')) {
+    ext.mainClass = ''
+}
+
+sourceCompatibility = '11'
+
+compileJava {
+    options.compilerArgs.addAll(['--release', '11'])
+}
+
+dependencies {
+    compile project(':jme3-core')
+}
