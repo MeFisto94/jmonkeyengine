@@ -9,16 +9,17 @@ package com.jme3.pipelines;
  * multiple numbers of arguments (e.g. 1 to 2 and 2 to 1), we will see how sufficient one argument is, especially
  * when using Java 14+ records.
  *
- * @param <A> The data type
+ * @param <I> The input data type
+ * @param <O> the output data type
  */
-public interface PipelinePass1<A> {
+public interface PipelinePass1<I, O> {
 
     /**
      * This is called when the previous pass has finished processing and thus invokes this.<br />
      * It's the implementers responsibility to propagate this change (if desired) to the successors.<br />
      * @param first the processing output of the previous step
      */
-    void process(A first);
+    void process(I first);
 
     /**
      * Adds a new pass as successor to this.<br />
@@ -27,7 +28,7 @@ public interface PipelinePass1<A> {
      * @return the freshly added pass(!)
      * @see #thenAdd(PipelinePass1)
      */
-    PipelinePass1<A> then(PipelinePass1<A> nextPass);
+    <T> PipelinePass1<O, T> then(PipelinePass1<O, T> nextPass);
 
     /**
      * Adds a new pass as successor to this.<br />
@@ -36,12 +37,12 @@ public interface PipelinePass1<A> {
      * @return this(!)
      * @see #then(PipelinePass1)
      */
-    PipelinePass1<A> thenAdd(PipelinePass1<A> nextPass);
+    PipelinePass1<I, O> thenAdd(PipelinePass1<O, ?> nextPass);
 
     /**
      * This is called when <code>this</code> has been added to the corresponding predecessor.<br />
      * This may be useful to count the ingoing passes, but DO NOT use this for processing of data.
      * @param predecessor the predecessor pass
      */
-    void onConnect(PipelinePass1<A> predecessor);
+    void onConnect(PipelinePass1<?, I> predecessor);
 }

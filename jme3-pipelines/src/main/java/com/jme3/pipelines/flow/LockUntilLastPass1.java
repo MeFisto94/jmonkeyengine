@@ -3,22 +3,22 @@ package com.jme3.pipelines.flow;
 import com.jme3.pipelines.AbstractPipelinePass1;
 import com.jme3.pipelines.PipelinePass1;
 
-public class LockUntilLastPass1<A> extends AbstractPipelinePass1<A> {
+public class LockUntilLastPass1<I> extends AbstractPipelinePass1<I, I> {
     int nbOfConnections = 0;
     int nbOfCalls = 0;
 
     @Override
-    public void onConnect(PipelinePass1<A> predecessor) {
+    public void onConnect(PipelinePass1<?, I> predecessor) {
         nbOfConnections++;
     }
 
     @Override
-    public A doProcess(A first) {
+    public I doProcess(I first) {
         return first;
     }
 
     @Override
-    public void process(A first) {
+    public void process(I first) {
         nbOfCalls++;
         if (nbOfCalls == nbOfConnections) {
             super.process(first);

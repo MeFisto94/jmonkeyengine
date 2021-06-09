@@ -3,8 +3,8 @@ package com.jme3.pipelines;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractPipelinePass1<A> implements PipelinePass1<A> {
-    List<PipelinePass1<A>> successors = new ArrayList<>();
+public abstract class AbstractPipelinePass1<I, O> implements PipelinePass1<I, O> {
+    protected List<PipelinePass1<O, ?>> successors = new ArrayList<>();
 
     /**
      * Implement this method to do the processing at this pipeline step.<br />
@@ -14,28 +14,28 @@ public abstract class AbstractPipelinePass1<A> implements PipelinePass1<A> {
      * @param first the first argument of this pass
      * @return the processed value
      */
-    public abstract A doProcess(A first);
+    public abstract O doProcess(I first);
 
     @Override
-    public void process(A first) {
-        A a = doProcess(first);
+    public void process(I first) {
+        O o = doProcess(first);
         for (var p : successors) {
-            p.process(a);
+            p.process(o);
         }
     }
 
     @Override
-    public void onConnect(PipelinePass1<A> predecessor) { }
+    public void onConnect(PipelinePass1<?, I> predecessor) { }
 
     @Override
-    public PipelinePass1<A> then(PipelinePass1<A> nextPass) {
+    public <T> PipelinePass1<O, T> then(PipelinePass1<O, T> nextPass) {
         successors.add(nextPass);
         nextPass.onConnect(this);
         return nextPass;
     }
 
     @Override
-    public PipelinePass1<A> thenAdd(PipelinePass1<A> nextPass) {
+    public PipelinePass1<I, O> thenAdd(PipelinePass1<O, ?> nextPass) {
         successors.add(nextPass);
         nextPass.onConnect(this);
         return this;
